@@ -26,6 +26,12 @@ public class CurrencyService {
         return restTemplate.getForObject(url, String.class);
     }
 
+    public String getCurrencyRate(String baseCurrency) {
+        String url = config.getApiUrl("currencies/" + baseCurrency + ".json");
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(url, String.class);
+    }
+
     public String getCurrencyList(String date) {
 
         if (!DateUtil.isValidDateFormat(date)) {
@@ -42,8 +48,6 @@ public class CurrencyService {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        System.out.println("Calling API URL: " + url);
-        System.out.println("API Response: " + response.getBody());
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();

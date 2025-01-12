@@ -25,4 +25,15 @@ public class CurrencyController {
     String getCurrencyListLatest() {
         return currencyService.getCurrencyList();
     }
+
+    @GetMapping("/currency/{currencyCode}/{date}")
+    String getCurrencyRate(@PathVariable String currencyCode,
+                           @PathVariable String date) {
+        return currencyService.getCurrencyRate(date, currencyCode);
+    }
+
+    @GetMapping("/currency/{currencyCode}")
+    String getCurrencyRateLatest(@PathVariable String currencyCode) {
+        return currencyService.getCurrencyRate(currencyCode);
+    }
 }
