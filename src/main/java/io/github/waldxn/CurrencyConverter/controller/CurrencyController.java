@@ -1,12 +1,13 @@
 package io.github.waldxn.CurrencyConverter.controller;
 
 import io.github.waldxn.CurrencyConverter.service.CurrencyService;
-import io.github.waldxn.CurrencyConverter.utility.DateUtil;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class CurrencyController {
 
     final CurrencyService currencyService;
@@ -18,5 +19,10 @@ public class CurrencyController {
     @GetMapping("/currencies/{date}")
     String getCurrencyList(@PathVariable String date) {
         return currencyService.getCurrencyList(date);
+    }
+
+    @GetMapping("/currencies")
+    String getCurrencyListLatest() {
+        return currencyService.getCurrencyList();
     }
 }
