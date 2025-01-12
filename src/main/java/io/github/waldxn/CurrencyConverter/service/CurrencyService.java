@@ -2,6 +2,7 @@ package io.github.waldxn.CurrencyConverter.service;
 
 import io.github.waldxn.CurrencyConverter.config.Config;
 import io.github.waldxn.CurrencyConverter.utility.DateUtil;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,5 +35,20 @@ public class CurrencyService {
         String url = config.getApiUrl(date, "currencies.json");
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url, String.class);
+    }
+
+    public String getCurrencyList() {
+        String url = config.getApiUrl("currencies.json");
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        System.out.println("Calling API URL: " + url);
+        System.out.println("API Response: " + response.getBody());
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return response.getBody();
+        } else {
+            throw new RuntimeException("Can't fetch currencies!");
+        }
     }
 }
